@@ -168,6 +168,13 @@
     isNormalUser = true;
     extraGroups = [ "libvirtd" ];
   };
+  
+  users.users.boredom101 = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjeemhlJimE+5/THTqeKyXuW2+2iDSZDdG0P2gz0x8SqQGJ5VeOYcxbOBzDdjXxgkScSVuCKbwSitpMsgLLlYhm3CfSP8rN0lhxz0t7Q7H6OWHzll07qLVvlh4BbBOwod8+NKHcPe+4Paur754IOlwCOb4kDRaUXBmyl84lgTik5g7m7XI7JJIQbZovguBZIVMjMNAPOonqL86OEk3WiuGOKrGFstLjl9P6LuA01Mz2E446PiajEMhzS5xPxs2s5Z/lT0+gLDdISQN69PaXy0kSZkXpjzoUADfgz4aZ/MgYTn6qR4ntlVHKxUpo8EbuTleFwsjMRHRA8bmCFReX4MMcj8/b0Vlzu7f9k1wADJAAT9GW+EVz7xgC4k9mMr0eWoYLYs0txuHwnG9DbA487p5R+P9LfUrXIYdqnk4YzvjbFIBJQIi3SQFdGlY1Z1989sQBBuuRkomZmnvKk1JPnrNtYQaXN4BzfJGydzpW8wEH/lBvoFckUviBodzGlCWnHk= yisroel@DESKTOP-MKI0HG0"
+    ];
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

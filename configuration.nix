@@ -190,6 +190,13 @@
     ];
   };
 
+  users.users.jurraca = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDGmwV0S9JoNaO3mMpSrjkv2gD4Vd0hw2ljLKaRzMQpv jurraca@nix"
+    ];
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

@@ -13,7 +13,7 @@ To add yourself, please add the following to `configuration.nix`:
 
 ## Local configuration
 
-To connect to the build machine, you will need to add this to your `~/.ssh/confg`:
+To connect to the build machine, you will need to add this to your `~/.ssh/config`:
 ```
 Host jonringer
   HostName <will be sent to you>

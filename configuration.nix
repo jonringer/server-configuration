@@ -211,6 +211,13 @@
     ];
   };
 
+  users.users.artturin = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtXhvhk+LLfrO2K11ftf2qRaczYvEJLLr7tNsENuErQ ar-keyfor-rs"
+    ];
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
@@ -218,4 +225,3 @@
   system.stateVersion = "19.09"; # Did you read the comment?
 
 }
-

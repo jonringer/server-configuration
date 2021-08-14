@@ -52,6 +52,7 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   programs.bash.enableCompletion = true;
+  programs.mosh.enable = true;
   networking.useDHCP = false;
   networking.interfaces.enp67s0.useDHCP = true;
   networking.interfaces.enp68s0.useDHCP = true;

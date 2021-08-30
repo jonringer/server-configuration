@@ -31,6 +31,7 @@
   '';
 
   # Use the systemd-boot EFI boot loader.
+  boot.kernel.sysctl."vm.swappiness" = 0;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "zfs" ];

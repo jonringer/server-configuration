@@ -246,6 +246,13 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyQSeQ0CV/qhZPre37+Nd0E9eW+soGs+up6a/bwggoP raphael@RAPHAELs-MacBook-Pro.local"
     ];
   };
+  
+  users.users.ysander = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6VLyCv4qmk2coyzhjm4qhd5LpsTmbNGh1HbJOWzYvj openpgp:0xF401BBD4"
+    ];
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -29,6 +29,12 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  nix.sshServe = {
+    enable = true;
+    keys = lib.concatMap (u: u.openssh.authorizedKeys.keys) config.users.users;
+    protocol = "ssh-ng";
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.kernel.sysctl."vm.swappiness" = 0;

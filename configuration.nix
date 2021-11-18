@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -16,7 +16,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ (import ./overlays/factorio.nix) ];
-  nix.autoOptimiseStore = true;
+  nix.autoOptimiseStore = false;
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
   nix.daemonIONiceLevel = 5;
@@ -31,11 +31,13 @@
   '';
 
   # Use the systemd-boot EFI boot loader.
+  boot.kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;
   boot.kernel.sysctl."vm.swappiness" = 0;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportAll = true;
   boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     options kvm ignore_msrs=1

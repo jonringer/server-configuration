@@ -17,11 +17,10 @@
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 131072;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ (import ./overlays/factorio.nix) ];
-  nix.autoOptimiseStore = false;
+  nix.autoOptimiseStore = true;
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
   nix.daemonIONiceLevel = 5;
-  nix.daemonNiceLevel = 15;
   nix.buildCores = 32;
   nix.maxJobs = 64;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" ];
@@ -39,6 +38,7 @@
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = true;
+  services.zfs.trim.enable = true;
   boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     options kvm ignore_msrs=1
@@ -143,7 +143,6 @@
        rpc-bind-address = "127.0.0.1";
        rpc-port = 9091;
        script-torrent-done-enabled = false;
-       script-torrent-done-filename = "";
        umask = 2;
        utp-enabled = true;
        watch-dir = "/var/lib/transmission/watchdir";

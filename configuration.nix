@@ -214,6 +214,13 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG2lfvWM5a7Xy255kRZN1c2Z5QToUm8ecF+/lP7FpS0 bill@ewanick.com"
     ];
   };
+  
+  users.users.jtojnar = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEH4OFCc6a84dXHFHjNQ2HohLTFcYkxe+Lz/t3teWCrQ jtojnar@brian"
+    ];
+  };
 
   users.users.jurraca = {
     isNormalUser = true;

@@ -20,10 +20,9 @@
   nix.autoOptimiseStore = true;
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
-  nix.daemonIONiceLevel = 5;
   nix.buildCores = 32;
   nix.maxJobs = 64;
-  nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" ];
+  nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
   # Flake support
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
@@ -213,7 +212,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG2lfvWM5a7Xy255kRZN1c2Z5QToUm8ecF+/lP7FpS0 bill@ewanick.com"
     ];
   };
-  
+
   users.users.jtojnar = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [

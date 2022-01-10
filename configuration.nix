@@ -78,7 +78,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim git htop lm_sensors gitAndTools.hub
+    wget vim git htop lm_sensors gitAndTools.hub tmux
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

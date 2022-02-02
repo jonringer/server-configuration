@@ -188,6 +188,7 @@
 
   networking.firewall.allowedTCPPorts = [
     config.services.hydra.port
+    config.services.nix-serve.port
     80 443 9091 9100 5001 2222 34159
   ];
 

@@ -29,6 +29,9 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+  nix.gc.automatic = true;
+  nix.gc.options = "--max-freed 100G";
+  nix.gc.dates = "daily";
 
   # Use the systemd-boot EFI boot loader.
   boot.kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;

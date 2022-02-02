@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./prometheus-metrics.nix
+      ./web.nix
     ];
 
   services.grafana.enable = true;
@@ -171,7 +172,7 @@
   services.gnome.at-spi2-core.enable = true;
   virtualisation.libvirtd.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 9091 9100 5001 2222 34159 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9091 9100 5001 2222 34159 ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jon = {

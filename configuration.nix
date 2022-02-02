@@ -49,6 +49,17 @@
   nix.binaryCachePublicKeys = [
   ];
 
+  services.postgresql.package = pkgs.postgresql_14;
+  services.hydra = {
+    enable = true;
+
+    hydraURL = "https://hydra.jonringer.us";
+    notificationSender = "hydra@jonringer.us";
+    buildMachinesFiles = [ ];
+    useSubstitutes = true;
+
+    port = 3100;
+  };
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -172,7 +183,10 @@
   services.gnome.at-spi2-core.enable = true;
   virtualisation.libvirtd.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 9091 9100 5001 2222 34159 ];
+  networking.firewall.allowedTCPPorts = [
+    config.services.hydra.port
+    80 443 9091 9100 5001 2222 34159
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jon = {

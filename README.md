@@ -32,3 +32,18 @@ After applying the changes, you should be able to do:
 ssh jonringer
 ```
 To sign in.
+
+## Nix binary cache
+
+It might be useful in certain cases to use this server as a binary cache. For example,
+if a jobset is made for a PR that you're iterating on.
+
+**WARNING**: This server isn't held to the same security standards as the official
+hydra instance. Care should be taken to avoid using binary packages from any 3rd party (this server included).
+
+
+```nix
+binaryCaches = [ "https://cache.jonringer.us" ];
+binaryCachePublicKeys = [ "cache.jonringer.us:c06xmyNNX/uG4j7db3flzcz08Yi3rBkpdaLuZKrZvwIEZqv5fn8vpPY1CKR4OrX977Aw9g/4axmzHr/QdqD4BA==" ];
+```
+

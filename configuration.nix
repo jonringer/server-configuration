@@ -24,7 +24,7 @@
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
   nix.buildCores = 6;
-  nix.maxJobs = 40;
+  nix.maxJobs = 80;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
   # Flake support
   nix.package = pkgs.nixUnstable;
@@ -33,7 +33,11 @@
   '';
   nix.gc.automatic = true;
   nix.gc.options = "--max-freed 100G";
-  nix.gc.dates = "daily";
+  # every 3rd day
+  nix.gc.dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
+
+  services.nix-serve.enable = true;
+  services.nix-serve.secretKeyFile = "/var/cache-priv-key.pem";
 
   # Use the systemd-boot EFI boot loader.
   boot.kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;

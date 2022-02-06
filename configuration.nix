@@ -27,7 +27,6 @@
   nix.maxJobs = 80;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
   # Flake support
-  nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';

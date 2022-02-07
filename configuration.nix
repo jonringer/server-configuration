@@ -23,8 +23,8 @@
   nix.autoOptimiseStore = true;
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
-  nix.buildCores = 6;
-  nix.maxJobs = 80;
+  nix.buildCores = 32;
+  nix.maxJobs = 25;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
   # Flake support
   nix.extraOptions = ''

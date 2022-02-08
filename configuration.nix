@@ -24,7 +24,7 @@
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
   nix.buildCores = 32;
-  nix.maxJobs = 25;
+  nix.maxJobs = 40;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
   # Flake support
   nix.extraOptions = ''

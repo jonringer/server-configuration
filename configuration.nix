@@ -43,6 +43,7 @@
   boot.kernel.sysctl."vm.swappiness" = 0;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = true;
@@ -51,6 +52,14 @@
     options kvm-amd nested=1
     options kvm ignore_msrs=1
   '';
+  services.sanoid = {
+    enable = true;
+    datasets."nixstore/nix" = {
+      daily = 3;
+      autoprune = true;
+      autosnapshot = true;
+    };
+  };
 
   nix.binaryCaches = [
   ];
@@ -59,7 +68,7 @@
 
   services.postgresql.package = pkgs.postgresql_14;
   services.hydra = {
-    enable = true;
+    enable = false;
 
     hydraURL = "https://hydra.jonringer.us";
     notificationSender = "hydra@jonringer.us";

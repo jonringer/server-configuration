@@ -85,6 +85,14 @@
   # replicates the default behaviour.
   programs.bash.enableCompletion = true;
   programs.mosh.enable = true;
+  programs.zsh = {
+    enable = true;
+    syntaxHighlighting.enable = true;
+    interactiveShellInit = ''
+      source ${pkgs.grml-zsh-config}/etc/zsh/zshrc
+    '';
+    promptInit = ""; # otherwise it'll override the grml prompt
+  };
   networking.useDHCP = false;
   networking.interfaces.enp67s0.useDHCP = true;
   networking.interfaces.enp68s0.useDHCP = true;
@@ -276,6 +284,7 @@
   };
 
   users.users.artturin = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtXhvhk+LLfrO2K11ftf2qRaczYvEJLLr7tNsENuErQ ar-keyfor-rs"

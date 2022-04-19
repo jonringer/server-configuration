@@ -19,7 +19,7 @@
 
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 131072;
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ (import ./overlays/factorio.nix) ];
+  nixpkgs.overlays = [ ];
   nix.autoOptimiseStore = true;
   nix.useSandbox = true;
   nix.nrBuildUsers = 450;
@@ -148,7 +148,7 @@
   };
 
   services.factorio = {
-    enable = true;
+    enable = false;
     package = pkgs.factorio-headless-experimental;
     autosave-interval = 10;
     openFirewall = true;

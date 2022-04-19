@@ -1,11 +1,20 @@
 name: "Test"
 on:
-  pull_request:
+  pull_request_target:
   push:
+  # build every 5 days using the latest unstable
+  schedule:
+    - cron: 0 0 */5 * *
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v16
-    - run: nix eval -f configuration.nix
+    - uses: cachix/install-nix-action@v17
+    - run: |
+        mkdir -p ./overlays
+        echo '(self: super: {})' > ./overlays/factorio.nix
+        git add ./overlays
+        mkdir -p /run/empty || true
+    - run: nix flake check
+    - run: nix -L build ".#nixosConfigurations.server.config.system.build.toplevel" --override-input nixpkgs nixpkgs

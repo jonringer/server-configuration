@@ -326,6 +326,14 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuzJ8xfKAkt6m0ByZK26LZQaQQGsaX68D5/9UeiVGb9 user@laptop1"
     ];
   };
+  
+  # DavHau
+  users.users.davhau = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDuhpzDHBPvn8nv8RH1MRomDOaXyP4GziQm7r3MZ1Syk"
+    ];
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

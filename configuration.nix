@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hydra, ... }:
 
 {
   imports =
@@ -69,7 +69,8 @@
 
   services.postgresql.package = pkgs.postgresql_14;
   services.hydra = {
-    enable = false;
+    enable = true;
+    package = hydra;
 
     hydraURL = "https://hydra.jonringer.us";
     notificationSender = "hydra@jonringer.us";

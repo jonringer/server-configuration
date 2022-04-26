@@ -226,6 +226,9 @@
   users.users.tim = {
     isNormalUser = true;
     extraGroups = [ "libvirtd" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIf7jDfqGKNZVwrJ3Yl+4aJe8sZpCmhlOB5PJC9L1Kto tim.deherrera@iohk.io"
+    ];
   };
 
   # aka. lovesegfault
@@ -327,7 +330,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuzJ8xfKAkt6m0ByZK26LZQaQQGsaX68D5/9UeiVGb9 user@laptop1"
     ];
   };
-  
+
   # DavHau
   users.users.davhau = {
     isNormalUser = true;

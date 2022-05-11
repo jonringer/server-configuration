@@ -62,6 +62,12 @@
     };
   };
 
+  services.earlyoom = {
+    enable = true;
+    # 2% of 256G = 5.12G
+    freeMemThreshold = 2;
+  };
+
   nix.binaryCaches = [
   ];
   nix.binaryCachePublicKeys = [

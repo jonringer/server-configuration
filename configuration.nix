@@ -68,6 +68,12 @@
     freeMemThreshold = 2;
   };
 
+  services.journald.extraConfig = ''
+    MaxRetentionSec=3week
+    SystemMaxUse=200M
+    RuntimeMaxUse=100M
+  '';
+
   nix.binaryCaches = [
   ];
   nix.binaryCachePublicKeys = [

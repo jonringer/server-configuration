@@ -49,6 +49,7 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = true;
   services.zfs.trim.enable = true;
+  hardware.cpu.amd.updateMicrocode = true;
   boot.extraModprobeConfig = ''
     options kvm-amd nested=1
     options kvm ignore_msrs=1

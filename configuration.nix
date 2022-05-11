@@ -44,6 +44,8 @@
   boot.kernel.sysctl."vm.swappiness" = 0;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.tmpOnTmpfs = true;
+  boot.tmpOnTmpfsSize = "40%";
 
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];

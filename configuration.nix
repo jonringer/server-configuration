@@ -153,19 +153,19 @@
   };
 
   services.factorio = {
-    enable = false;
-    package = pkgs.factorio-headless-experimental;
+    enable = true;
+    package = pkgs.factorio-headless;
     autosave-interval = 10;
     openFirewall = true;
-    description = "MFG's adventure in Space";
+    description = "MFG's space adventure with friends";
     admins = [ "CheesyMcPuffs" "MostFunGuy" "ArroneXB" "PatHeist" "Rubber.Ducky" ];
-    game-name = "OTGG in Space, Dedicated";
+    game-name = "OTGG loves men; LGBTQIA+, Dedicated";
     game-password = "mfg";
     public = true;
     lan = true;
     token = "331c2d6bee32339c8bab60cab4a524";
     username = "CheesyMcPuffs";
-    saveName = "MFGinSpace";
+    saveName = "2022MFGNewModded";
     nonBlockingSaving = true;
   };
 

@@ -32,7 +32,6 @@
     experimental-features = nix-command flakes
   '';
   nix.gc.automatic = true;
-  nix.gc.options = "--max-freed 100G";
   # every 3rd day
   nix.gc.dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
 
@@ -353,7 +352,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDuhpzDHBPvn8nv8RH1MRomDOaXyP4GziQm7r3MZ1Syk"
     ];
   };
-  
+
   # @dasJ or das_j
   users.users.janne = {
     isNormalUser = true;

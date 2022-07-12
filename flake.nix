@@ -1,5 +1,6 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  #inputs.nixpkgs.url = "path:/home/jon/projects/nixpkgs";
   inputs.hydra.url = "github:NixOS/hydra";
 
   outputs = { self, nixpkgs, hydra }: {

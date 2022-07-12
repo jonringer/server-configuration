@@ -83,7 +83,7 @@
 
   services.postgresql.package = pkgs.postgresql_14;
   services.hydra = {
-    enable = true;
+    enable = false;
     package = hydra;
 
     hydraURL = "https://hydra.jonringer.us";

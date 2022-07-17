@@ -26,7 +26,6 @@
   nix.buildCores = 32;
   nix.maxJobs = 40;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
-  nix.package = pkgs.nixVersions.nix_2_7;
   # Flake support
   nix.extraOptions = ''
     experimental-features = nix-command flakes

@@ -29,7 +29,7 @@
 
   # https://github.com/NixOS/nix/pull/7283
   nix.package = pkgs.nixUnstable.overrideAttrs (old: {
-    version = "unstable-2022-11-16";
+    version = "2.11.1-unstable-2022-11-16";
     src = nixSource;
   });
 

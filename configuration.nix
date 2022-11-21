@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, hydra, nixSource, ... }:
+{ config, pkgs, lib, hydra, ... }:
 
 {
   imports =
@@ -26,13 +26,7 @@
   nix.buildCores = 32;
   nix.maxJobs = 40;
   nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
-
-  # https://github.com/NixOS/nix/pull/7283
-  nix.package = pkgs.nixUnstable.overrideAttrs (old: {
-    version = "unstable-2022-11-16";
-    src = nixSource;
-  });
-
+  nix.package = pkgs.nixVersions.nix_2_7;
   # Flake support
   nix.extraOptions = ''
     experimental-features = nix-command flakes

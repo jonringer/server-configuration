@@ -30,6 +30,7 @@
   # https://github.com/NixOS/nix/pull/7283
   nix.package = pkgs.nixUnstable.overrideAttrs (old: {
     src = nixSource;
+    patches = [ ];
   });
 
   # Flake support

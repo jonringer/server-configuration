@@ -4,7 +4,7 @@
   inputs.hydra.url = "github:NixOS/hydra";
 
   # https://github.com/NixOS/nix/pull/7283
-  inputs.nixSource.url = "github:NixOS/nix/62960f32915909a5104f2ca3a32b25fb3cfd34c7";
+  inputs.nixSource.url = "github:NixOS/nix/refs/tags/2.12.0";
 
   outputs = { self, nixpkgs, hydra, nixSource }: {
 

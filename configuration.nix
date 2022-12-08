@@ -13,33 +13,47 @@
     ];
 
   services.grafana.enable = true;
-  services.grafana.addr = "0.0.0.0";
-  services.grafana.port = 3050;
-  services.grafana.auth.anonymous.enable = true;
+  services.grafana.settings = {
+    server = {
+      http_addr = "0.0.0.0";
+      http_port = 3050;
+    };
+    "auth.anonymous".enabled = true;
+  };
 
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 131072;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ ];
-  nix.autoOptimiseStore = true;
-  nix.useSandbox = true;
-  nix.nrBuildUsers = 450;
-  nix.buildCores = 32;
-  nix.maxJobs = 40;
-  nix.trustedUsers = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
+  nix = {
+    nrBuildUsers = 450;
+    settings = {
+      auto-optimise-store = true;
+      sandbox = true;
+      cores = 32;
+      max-jobs = 40;
 
-  # https://github.com/NixOS/nix/pull/7283
-  nix.package = pkgs.nixUnstable.overrideAttrs (old: {
-    src = nixSource;
-    patches = [ ];
-  });
+      substituters = [ ];
+      trusted-public-keys = [ ];
+      trusted-users = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
+    };
 
-  # Flake support
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-  nix.gc.automatic = true;
-  # every 3rd day
-  nix.gc.dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
+
+    # https://github.com/NixOS/nix/pull/7283
+    package = pkgs.nixUnstable.overrideAttrs (old: {
+      src = nixSource;
+      patches = [ ];
+    });
+
+    # Flake support
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    gc = {
+      automatic = true;
+      # every 3rd day
+      dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
+    };
+  };
 
   services.nix-serve.enable = true;
   services.nix-serve.secretKeyFile = "/var/cache-priv-key.pem";
@@ -81,11 +95,6 @@
     SystemMaxUse=200M
     RuntimeMaxUse=100M
   '';
-
-  nix.binaryCaches = [
-  ];
-  nix.binaryCachePublicKeys = [
-  ];
 
   services.postgresql.package = pkgs.postgresql_14;
   services.hydra = {
@@ -157,7 +166,7 @@
     "/etc/ssh/extra_authorized_keys"
   ];
 
-  services.ipfs = {
+  services.kubo = {
     enable = true;
     dataDir = "/tank/ipfs";
     autoMount = true;
@@ -233,7 +242,7 @@
   networking.firewall.allowedTCPPorts = [
     config.services.hydra.port
     config.services.nix-serve.port
-    config.services.grafana.port
+    config.services.grafana.settings.server.http_port
     80 443 9091 9100 5001 2222 34159
   ];
 

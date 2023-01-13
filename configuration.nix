@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, hydra, nixSource, ... }:
+{ config, pkgs, lib, hydra, ... }:
 
 {
   imports =
@@ -36,13 +36,6 @@
       trusted-public-keys = [ ];
       trusted-users = [ "root" "@wheel" "jon" "nixpkgs-update" "tim" "jtojnar" ];
     };
-
-
-    # https://github.com/NixOS/nix/pull/7283
-    package = pkgs.nixUnstable.overrideAttrs (old: {
-      src = nixSource;
-      patches = [ ];
-    });
 
     # Flake support
     extraOptions = ''

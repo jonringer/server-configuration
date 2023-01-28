@@ -68,6 +68,11 @@
       options kvm-amd nested=1
       options kvm ignore_msrs=1
     '';
+    extraModulePackages = with config.boot.kernelPackages; [ zenpower ];
+    blacklistedKernelModules = [
+      # Replaced with zenpower
+      "k10temp"
+    ];
   };
 
   services.zfs.trim.enable = true;

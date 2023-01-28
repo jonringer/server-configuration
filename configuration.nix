@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./prometheus-metrics.nix
       ./web.nix
@@ -51,23 +52,26 @@
   services.nix-serve.enable = true;
   services.nix-serve.secretKeyFile = "/var/cache-priv-key.pem";
 
-  # Use the systemd-boot EFI boot loader.
-  boot.kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;
-  boot.kernel.sysctl."vm.swappiness" = 0;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.tmpOnTmpfs = true;
-  boot.tmpOnTmpfsSize = "40%";
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;
+    kernel.sysctl."vm.swappiness" = 0;
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    tmpOnTmpfs = true;
+    tmpOnTmpfsSize = "40%";
 
-  boot.initrd.kernelModules = [ "zfs" ];
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportAll = true;
+    initrd.kernelModules = [ "zfs" ];
+    supportedFilesystems = [ "zfs" ];
+    zfs.forceImportAll = true;
+    extraModprobeConfig = ''
+      options kvm-amd nested=1
+      options kvm ignore_msrs=1
+    '';
+  };
+
   services.zfs.trim.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
-  boot.extraModprobeConfig = ''
-    options kvm-amd nested=1
-    options kvm ignore_msrs=1
-  '';
   services.sanoid = {
     enable = true;
     datasets."nixstore/nix" = {
@@ -139,7 +143,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim git htop lm_sensors gitAndTools.hub tmux
+    wget
+    vim
+    git
+    htop
+    lm_sensors
+    gitAndTools.hub
+    tmux
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -188,27 +198,27 @@
     nonBlockingSaving = true;
   };
 
-   services.transmission = {
-     enable = true;
-     group = "users";
-     settings = {
-       download-dir = "/tank/torrents";
-       incomplete-dir = "/tank/torrents/.incomplete";
-       incomplete-dir-enabled = true;
-       message-level = 1;
-       peer-port = 51413;
-       peer-port-random-high = 65535;
-       peer-port-random-low = 49152;
-       peer-port-random-on-start = false;
-       rpc-bind-address = "127.0.0.1";
-       rpc-port = 9091;
-       script-torrent-done-enabled = false;
-       umask = 2;
-       utp-enabled = true;
-       watch-dir = "/var/lib/transmission/watchdir";
-       watch-dir-enabled = false;
-     };
-   };
+  services.transmission = {
+    enable = true;
+    group = "users";
+    settings = {
+      download-dir = "/tank/torrents";
+      incomplete-dir = "/tank/torrents/.incomplete";
+      incomplete-dir-enabled = true;
+      message-level = 1;
+      peer-port = 51413;
+      peer-port-random-high = 65535;
+      peer-port-random-low = 49152;
+      peer-port-random-on-start = false;
+      rpc-bind-address = "127.0.0.1";
+      rpc-port = 9091;
+      script-torrent-done-enabled = false;
+      umask = 2;
+      utp-enabled = true;
+      watch-dir = "/var/lib/transmission/watchdir";
+      watch-dir-enabled = false;
+    };
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -236,7 +246,13 @@
     config.services.hydra.port
     config.services.nix-serve.port
     config.services.grafana.settings.server.http_port
-    80 443 9091 9100 5001 2222 34159
+    80
+    443
+    9091
+    9100
+    5001
+    2222
+    34159
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

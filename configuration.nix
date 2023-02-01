@@ -283,6 +283,14 @@
     ];
   };
 
+  # aka. superherointj
+  users.users.intj = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqRCea/LOcb2AIh28vdOTKZObTZn6mHm39fYDzSUXjohkc1eaMXVfK+OJUzBn+x7Z1pLHmuevNTFWD2Gk5Xgpp5iETNQVwbLLrtjgLhvxqcLcqIy6JD+ZwUcC7YdFop2Jju4fUftESE1NVEZwxnqLXcgjbHSU1kSbLI+AzizDaH/MXEeZfu5r7cqsJThfvi/56RrZ20UmLcK15bWr9TmBSd9id98nVaDvqU9rbC72B++aj5kninkxMFa+N3+eDEhxiPeK36mmuF4MFFX0DXr7YDTMtQw7ju8WjfxGZZwAiNZozcmd7Ilm/max4ereJUQ4Ds9wRtAhbVGzhI+cvQHOlD4cVfjocA5r8x82rZhTg1vV/xJpwM06/iTF2jK8aWqlLqtRGJbaWg5dVtie4V+itOnTJ8oQC+5kksDWTiSahP5FrhpzIRsU/xe8XQgsmDlhQDpeMTS3Sc779/oSdsJjqp8SZhhDusBhj61slExLdnC3DK7kmgzTu/f+If4k4v5c= intj@nixos-5950x"
+    ];
+  };
+
   users.users.jtojnar = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [

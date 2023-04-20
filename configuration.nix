@@ -56,8 +56,10 @@
   boot.kernel.sysctl."vm.swappiness" = 0;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.tmpOnTmpfs = true;
-  boot.tmpOnTmpfsSize = "40%";
+  boot.tmp = {
+    useTmpfs = true;
+    tmpfsSize = "40%";
+  };
 
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
@@ -117,6 +119,7 @@
     '';
     promptInit = ""; # otherwise it'll override the grml prompt
   };
+  programs.fish.enable = true;
   networking.useDHCP = false;
   networking.interfaces.enp67s0.useDHCP = true;
   networking.interfaces.enp68s0.useDHCP = true;

@@ -21,7 +21,7 @@
     "auth.anonymous".enabled = true;
   };
 
-  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 131072;
+  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ ];
   nix = {

@@ -1,8 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, hydra, ... }:
+{ config, pkgs, lib, inputs, system, ... }:
 
 {
   imports =
@@ -47,6 +43,11 @@
       dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
     };
   };
+
+  # pin nixpkgs channel to the system revision
+  # users can still add their own channels
+  environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs;
+  nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
 
   services.nix-serve.enable = true;
   services.nix-serve.secretKeyFile = "/var/cache-priv-key.pem";
@@ -94,7 +95,7 @@
   services.postgresql.package = pkgs.postgresql_14;
   services.hydra = {
     enable = false;
-    package = hydra;
+    package = inputs.hydra.packages.${system}.hydra;
 
     hydraURL = "https://hydra.jonringer.us";
     notificationSender = "hydra@jonringer.us";

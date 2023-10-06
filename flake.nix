@@ -3,15 +3,15 @@
   #inputs.nixpkgs.url = "path:/home/jon/projects/nixpkgs";
   inputs.hydra.url = "github:NixOS/hydra";
 
-  outputs = { self, nixpkgs, hydra }: {
+  outputs = inputs: {
 
-    nixosConfigurations.server = nixpkgs.lib.nixosSystem rec {
+    nixosConfigurations.server = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
       ];
       specialArgs = {
-        inherit (hydra.packages.${system}) hydra;
+        inherit inputs;
       };
     };
 

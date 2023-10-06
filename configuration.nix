@@ -65,6 +65,7 @@
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportAll = true;
+  boot.zfs.extraPools = [ "nixstore" ];
   services.zfs.trim.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   boot.extraModprobeConfig = ''

@@ -55,7 +55,16 @@
   # Use the systemd-boot EFI boot loader.
   boot.kernel.sysctl."net.core.rmem_max" = lib.mkForce 4150000;
   boot.kernel.sysctl."vm.swappiness" = 0;
-  boot.loader.systemd-boot.enable = true;
+
+  boot.loader.systemd-boot = {
+    enable = true;
+    memtest86 = {
+      enable = true;
+      # show the entry after the NixOS entries
+      entryFilename = "omemtest86.conf";
+    };
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmp = {
     useTmpfs = true;

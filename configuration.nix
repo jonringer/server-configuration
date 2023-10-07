@@ -79,6 +79,8 @@
 
   # List services that you want to enable:
 
+  services.fstrim.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.ports = [ 22 2222 3000 9100 ];
@@ -182,7 +184,7 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDSF4CzkvONzaze5m0huhLmED9fxQTtuyv7rszWI0ju/+U4Gq4+Sd800vFrADfnbiLS4hgK4pDw5D8dXxi74mPeXXZV4oomafCnlvW7tL7RidEXvkP2sr1ObgkuQ9K67hSqKjT21mCWdEN6WGHh9EtK5r3nXIzUWhATqDz/Al7sveDZ/gdapo+f3xnmpOu1mq+y5iOcRV7b98z/VaiWAvuG83toIBsK4Su/GWWfMNied9R2K2Z10NM3ART0Sk+4yqH4usJOieTQsLAq8Ykb3PAYDMVx41yy9QNcFnCyX/HJHFO/Q98BLQ2zPxVbBMwp99NrKLqrwkrVtrWbAttanm9 cardno:000607658414"
     ];
   };
-  
+
   users.users.bill = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
@@ -211,4 +213,3 @@
   system.stateVersion = "19.09"; # Did you read the comment?
 
 }
-

@@ -375,6 +375,15 @@
     ];
   };
 
+  users.users.sgo = {
+    isNormalUser = true;
+    shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKDXQTWMtazTjVEnktJxpKPOmdGHZNHMqNNwnI+hjmY1AAAABHNzaDo= stig+yk-rk@stig.io"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMXypzDKusK4bz7FSJkwlMUkXSXywf/xXvQSM7s5eJsEu68hD9i1wN4dHspqyZlqqNvlvtbS/DvnEP6z55g7CHY= stig+nixbuild@stig.io"
+    ];
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

@@ -163,6 +163,8 @@
 
   # List services that you want to enable:
 
+  services.fstrim.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.ports = [ 22 2222 3000 9100 ];

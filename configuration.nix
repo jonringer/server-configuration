@@ -81,6 +81,8 @@
     options kvm-amd nested=1
     options kvm ignore_msrs=1
   '';
+  boot.kernelPackages = pkgs.zfs.latestCompatibleLinuxPackages;
+
   services.sanoid = {
     enable = true;
     datasets."nixstore/nix" = {

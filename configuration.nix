@@ -397,6 +397,15 @@
     ];
   };
 
+  # @yayayayaka
+  users.users.yaya = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH+8UDzJpCVXn/KmkjtkBqoBhREIqnm+4uU1gPFwwuTl irisu"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHS7O+fAO1XscN625WUWZOQVV6wbjXoGajXlBqV5kB1 krul"
+    ];
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

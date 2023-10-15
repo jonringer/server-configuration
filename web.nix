@@ -39,38 +39,39 @@
       proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
     '';
 
-    virtualHosts."jonringer.us" = {
-      forceSSL = true;
-      enableACME = true;
+    virtualHosts = {
+      "jonringer.us" = {
+        forceSSL = true;
+        enableACME = true;
 
-      serverAliases = [ "www.jonringer.us" ];
-      root = "/var/www/jonringer";
-      locations."/".index = "index.html";
-    };
-
-    virtualHosts."hydra.jonringer.us" = {
-      forceSSL = true;
-      enableACME = true;
-
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.hydra.port}";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        # extraConfig =
-        #   # required when the target is also TLS server with multiple hosts
-        #   # "proxy_ssl_server_name on;" +
-        #   # required when the server wants to use HTTP Authentication
-        #   #"proxy_pass_header Authorization;"
-        #   ;
+        serverAliases = [ "www.jonringer.us" ];
+        root = "/var/www/jonringer";
+        locations."/".index = "index.html";
       };
-    };
 
-    virtualHosts."cache.jonringer.us" = {
-      enableACME = true;
+      "hydra.jonringer.us" = {
+        forceSSL = true;
+        enableACME = true;
 
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.nix-serve.port}";
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.hydra.port}";
+          proxyWebsockets = true; # needed if you need to use WebSocket
+          # extraConfig =
+          #   # required when the target is also TLS server with multiple hosts
+          #   # "proxy_ssl_server_name on;" +
+          #   # required when the server wants to use HTTP Authentication
+          #   #"proxy_pass_header Authorization;"
+          #   ;
+        };
+      };
+
+      "cache.jonringer.us" = {
+        enableACME = true;
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.nix-serve.port}";
+        };
       };
     };
   };
 }
-

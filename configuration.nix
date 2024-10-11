@@ -119,6 +119,7 @@
         StreamLocalBindUnlink yes
       '';
       authorizedKeysFiles = [ "/etc/ssh/extra_authorized_keys" ];
+      settings.PasswordAuthentication = false;
     };
 
     kubo = {

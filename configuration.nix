@@ -53,7 +53,7 @@
 
   # Services {{{
   services = {
-    grafana.enable = true;
+    grafana.enable = false;
     grafana.settings = {
       server = {
         http_addr = "0.0.0.0";

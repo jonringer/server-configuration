@@ -66,6 +66,7 @@
       };
 
       "cache.jonringer.us" = {
+        forceSSL = true;
         enableACME = true;
 
         locations."/" = {

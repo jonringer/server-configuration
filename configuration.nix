@@ -1,7 +1,7 @@
 { config
 , pkgs
 , lib
-, inputs
+#, inputs
 , system
 , ...
 }:
@@ -93,8 +93,8 @@
     postgresql.package = pkgs.postgresql_14;
 
     hydra = {
-      enable = false;
-      package = inputs.hydra.packages.${system}.hydra;
+      enable = true;
+      # package = inputs.hydra.packages.${system}.hydra;
 
       hydraURL = "https://hydra.jonringer.us";
       notificationSender = "hydra@jonringer.us";
@@ -235,6 +235,7 @@
     nrBuildUsers = 450;
 
     settings = {
+      allowed-uris = [ "git+https://" "https://" "github.com:jonringer/" ];
       auto-optimise-store = true;
       sandbox = true;
       cores = 32;
@@ -275,7 +276,7 @@
   environment = {
     # pin nixpkgs channel to the system revision
     # users can still add their own channels
-    etc."nix/inputs/nixpkgs".source = inputs.nixpkgs;
+    etc."nix/inputs/nixpkgs".source = pkgs.path;
 
     systemPackages = with pkgs; [
       wget

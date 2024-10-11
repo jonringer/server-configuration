@@ -1,7 +1,7 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   #inputs.nixpkgs.url = "path:/home/jon/projects/nixpkgs";
-  inputs.hydra.url = "github:NixOS/hydra";
+  #inputs.hydra.url = "github:NixOS/hydra";
 
   outputs = inputs: {
 
@@ -11,7 +11,7 @@
         ./configuration.nix
       ];
       specialArgs = {
-        inherit inputs;
+        #inherit inputs;
       };
     };
 

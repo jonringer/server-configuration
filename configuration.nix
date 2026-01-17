@@ -69,15 +69,6 @@
 
     zfs.trim.enable = true;
 
-    sanoid = {
-      enable = true;
-      datasets."nixstore/nix" = {
-        daily = 3;
-        autoprune = true;
-        autosnapshot = true;
-      };
-    };
-
     earlyoom = {
       enable = true;
       # 2% of 256G = 5.12G
@@ -93,7 +84,7 @@
     postgresql.package = pkgs.postgresql_14;
 
     hydra = {
-      enable = true;
+      enable = false;
       # package = inputs.hydra.packages.${system}.hydra;
 
       hydraURL = "https://hydra.jonringer.us";

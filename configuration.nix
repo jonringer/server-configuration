@@ -130,21 +130,21 @@
       package = pkgs.factorio-headless;
       autosave-interval = 10;
       openFirewall = true;
-      description = "MFG's space adventure with friends";
+      description = "Tisms not included";
       admins = [
         "CheesyMcPuffs"
-        "MostFunGuy"
         "ArroneXB"
         "PatHeist"
         "Rubber.Ducky"
+        "ShotColla"
       ];
-      game-name = "OTGG loves men; LGBTQIA+, Dedicated";
+      game-name = "Quality Learing Center";
       game-password = "mfg";
       public = true;
       lan = true;
       token = "331c2d6bee32339c8bab60cab4a524";
       username = "CheesyMcPuffs";
-      saveName = "2022MFGNewModded";
+      saveName = "2026MFGLovesMen";
       nonBlockingSaving = true;
     };
 

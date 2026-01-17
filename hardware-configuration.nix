@@ -18,8 +18,8 @@
       fsType = "ext4";
     };
 
-  fileSystems."/nix" =
-    { device = "nixstore/nix";
+  fileSystems."/nix/store" =
+    { device = "nixstore/store";
       fsType = "zfs";
     };
 

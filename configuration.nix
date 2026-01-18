@@ -1,7 +1,7 @@
 { config
 , pkgs
 , lib
-#, inputs
+, inputs
 , system
 , ...
 }:
@@ -25,11 +25,7 @@
 
     loader.systemd-boot = {
       enable = true;
-      memtest86 = {
-        enable = true;
-        # show the entry after the NixOS entries
-        entryFilename = "omemtest86.conf";
-      };
+      memtest86.enable = true;
     };
 
     loader.efi.canTouchEfiVariables = true;
@@ -47,7 +43,6 @@
       options kvm-amd nested=1
       options kvm ignore_msrs=1
     '';
-    kernelPackages = pkgs.zfs.latestCompatibleLinuxPackages;
   };
   # }}}
 
@@ -84,8 +79,8 @@
     postgresql.package = pkgs.postgresql_14;
 
     hydra = {
-      enable = false;
-      # package = inputs.hydra.packages.${system}.hydra;
+      enable = true;
+      package = inputs.hydra.packages.${pkgs.hostPlatform.system}.hydra;
 
       hydraURL = "https://hydra.jonringer.us";
       notificationSender = "hydra@jonringer.us";
@@ -151,6 +146,7 @@
     transmission = {
       enable = true;
       group = "users";
+      package = pkgs.transmission_4;
       settings = {
         download-dir = "/tank/torrents";
         incomplete-dir = "/tank/torrents/.incomplete";
@@ -170,11 +166,10 @@
       };
     };
 
-    xserver = {
-      enable = true;
-      displayManager.lightdm.enable = true;
-      desktopManager.plasma5.enable = true;
-    };
+    desktopManager.plasma6.enable = true;
+
+    xserver.enable = true;
+    xserver.displayManager.lightdm.enable = true;
 
     gnome.at-spi2-core.enable = true;
   };
@@ -182,7 +177,7 @@
 
   # Programs {{{
   programs = {
-    bash.enableCompletion = true;
+    bash.completion.enable = true;
     mosh.enable = true;
 
     zsh = {
@@ -282,7 +277,6 @@
       git
       htop
       lm_sensors
-      gitAndTools.hub
       tmux
     ];
   };

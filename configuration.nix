@@ -1,13 +1,11 @@
-{ config
-, pkgs
-, lib
-, inputs
-, system
-, ...
-}:
-
 {
-
+  config,
+  pkgs,
+  lib,
+  inputs,
+  system,
+  ...
+}: {
   # Imports {{{
   imports = [
     # Include the results of the hardware scan.
@@ -35,10 +33,10 @@
       tmpfsSize = "40%";
     };
 
-    initrd.kernelModules = [ "zfs" ];
-    supportedFilesystems = [ "zfs" ];
+    initrd.kernelModules = ["zfs"];
+    supportedFilesystems = ["zfs"];
     zfs.forceImportAll = true;
-    zfs.extraPools = [ "nixstore" ];
+    zfs.extraPools = ["nixstore"];
     extraModprobeConfig = ''
       options kvm-amd nested=1
       options kvm ignore_msrs=1
@@ -84,7 +82,7 @@
 
       hydraURL = "https://hydra.jonringer.us";
       notificationSender = "hydra@jonringer.us";
-      buildMachinesFiles = [ ];
+      buildMachinesFiles = [];
       useSubstitutes = true;
 
       port = 3100;
@@ -104,7 +102,7 @@
       extraConfig = ''
         StreamLocalBindUnlink yes
       '';
-      authorizedKeysFiles = [ "/etc/ssh/extra_authorized_keys" ];
+      authorizedKeysFiles = ["/etc/ssh/extra_authorized_keys"];
       settings.PasswordAuthentication = false;
     };
 
@@ -222,7 +220,7 @@
     nrBuildUsers = 450;
 
     settings = {
-      allowed-uris = [ "git+https://" "https://" "github.com:jonringer/" ];
+      allowed-uris = ["git+https://" "https://" "github.com:jonringer/"];
       auto-optimise-store = true;
       sandbox = true;
       cores = 32;
@@ -256,12 +254,12 @@
       dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
     };
 
-    nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+    nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
   };
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ ];
+    overlays = [];
   };
   # }}}
 
@@ -296,7 +294,7 @@
 
       tim = {
         isNormalUser = true;
-        extraGroups = [ "libvirtd" ];
+        extraGroups = ["libvirtd"];
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIf7jDfqGKNZVwrJ3Yl+4aJe8sZpCmhlOB5PJC9L1Kto tim.deherrera@iohk.io"
         ];
@@ -436,6 +434,13 @@
         ];
       };
 
+      fmzakari = {
+        isNormalUser = true;
+        shell = pkgs.fish;
+        openssh.authorizedKeys.keys = [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDruWlzuyOXV0Ltjv0vVoCSkf4/ic4ET4of6NTqLWfvw/wpNFDr3SXRDAftOFcyoKp0ls0z6xy3CH99pUNmVnU19nwPdPfY93FJHaVDmS3VUzhco+e+bd1Azds5bltg06H+2vuHFcFMA28Y1o5h6ISlVY45bUzhKnW6+9whwECGBQo5KSvSW0D50eP557DD1KZlWUuJrcno65iQUz6dZ+R5cwfoTRhCvh4ltzJ6Fel6RuHPzG3u56lHM+upsF1REljHsNGI6XF3bcRuIoSssvaT0ZzVJQz/YnI1+wGZDNSKJI7WE+xmhfhcGLDzVaxNkLuJLMv/goTcDsDBb1BVw0YF YubiKey #8531869 PIV Slot 9a"
+        ];
+      };
     };
   };
   # }}}
@@ -461,7 +466,6 @@
     }
   ];
   # }}}
-
 }
-
 # vim: fdm=marker
+

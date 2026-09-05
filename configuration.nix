@@ -241,14 +241,17 @@
       sandbox = true;
       cores = 32;
       max-jobs = 40;
+      build-dir = "/tmp";
 
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
+        "https://ekala-corepkgs.cachix.org"
       ];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "ekala-corepkgs.cachix.org-1:DcZV+vegWoEzacbSdXFXU4S7728C0eS9RfGpKeyHd6w="
       ];
       trusted-users = [
         "root"

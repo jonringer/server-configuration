@@ -233,7 +233,7 @@
 
   # Nix&Nixpkgs {{{
   nix = {
-    nrBuildUsers = 450;
+    nrBuildUsers = 128;
 
     settings = {
       allowed-uris = ["git+https://" "https://" "github.com:jonringer/"];

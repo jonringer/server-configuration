@@ -65,14 +65,15 @@
         };
       };
 
-      "cache.jonringer.us" = {
-        forceSSL = true;
-        enableACME = true;
-
-        locations."/" = {
-          proxyPass = "http://[::1]:9000";
-        };
-      };
+      # Disabled: nar-bridge not serving traffic yet.
+      # "cache.jonringer.us" = {
+      #   forceSSL = true;
+      #   enableACME = true;
+      #
+      #   locations."/" = {
+      #     proxyPass = "http://[::1]:9000";
+      #   };
+      # };
     };
   };
 }

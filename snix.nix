@@ -153,7 +153,8 @@ in {
     #    nginx proxies cache.jonringer.us to this.
     systemd.services.snix-nar-bridge = {
       description = "Snix nar-bridge (Nix HTTP binary cache)";
-      wantedBy = [ "multi-user.target" ];
+      # Disabled: not serving traffic yet, but store daemon + post-build-hook remain active.
+      # wantedBy = [ "multi-user.target" ];
       after = [ "snix-store-daemon.service" ];
       requires = [ "snix-store-daemon.service" ];
 

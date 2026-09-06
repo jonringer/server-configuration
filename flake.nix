@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
   #inputs.nixpkgs.url = "path:/home/jon/projects/nixpkgs";
   inputs.hydra.url = "github:NixOS/hydra";
   #inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";

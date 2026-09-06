@@ -81,20 +81,6 @@
       package = pkgs.ollama-rocm;
     };
 
-    postgresql.package = pkgs.postgresql_14;
-
-    hydra = {
-      enable = false;
-      package = inputs.hydra.packages.${pkgs.hostPlatform.system}.hydra;
-
-      hydraURL = "https://hydra.jonringer.us";
-      notificationSender = "hydra@jonringer.us";
-      buildMachinesFiles = [];
-      useSubstitutes = true;
-
-      port = 3100;
-    };
-
     fstrim.enable = true;
 
     openssh = {
@@ -111,12 +97,6 @@
       '';
       authorizedKeysFiles = ["/etc/ssh/extra_authorized_keys"];
       settings.PasswordAuthentication = false;
-    };
-
-    kubo = {
-      enable = true;
-      dataDir = "/tank/ipfs";
-      autoMount = true;
     };
 
     plex = {
@@ -146,29 +126,6 @@
       username = "CheesyMcPuffs";
       saveName = "2026MFGLovesMen";
       nonBlockingSaving = false;
-    };
-
-    transmission = {
-      enable = true;
-      group = "users";
-      package = pkgs.transmission_4;
-      settings = {
-        download-dir = "/tank/torrents";
-        incomplete-dir = "/tank/torrents/.incomplete";
-        incomplete-dir-enabled = true;
-        message-level = 1;
-        peer-port = 51413;
-        peer-port-random-high = 65535;
-        peer-port-random-low = 49152;
-        peer-port-random-on-start = false;
-        rpc-bind-address = "127.0.0.1";
-        rpc-port = 9091;
-        script-torrent-done-enabled = false;
-        umask = 2;
-        utp-enabled = true;
-        watch-dir = "/var/lib/transmission/watchdir";
-        watch-dir-enabled = false;
-      };
     };
 
     desktopManager.plasma6.enable = true;
@@ -218,15 +175,18 @@
 
     hostId = "b5b5bea7";
     firewall.allowedTCPPorts = [
-      config.services.hydra.port
-      config.services.grafana.settings.server.http_port
       80
       443
-      9091
-      9100
-      5001
       2222
-      34159
+      3000
+      4001
+      5001
+      9100
+      51413
+    ];
+    firewall.allowedUDPPorts = [
+      4001
+      51413
     ];
   };
   # }}}
@@ -288,7 +248,6 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [];
   };
   # }}}
 
@@ -343,62 +302,62 @@
       };
 
       # aka. lovesegfault
-      bemeurer = {
-        shell = pkgs.zsh;
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFAvxz7tBCov9310ucqrVeAS0aSWCVh5sSsLjH/62lIldFPd7JVK5y+f5VETycoRy9aQSzzlb4wsXtCX0WMtRx8tWbeV4MVXHSDROQEI1QpWM5BPgrLdNB5zR+czjSb0It+3XrzzOiu1RaIY/48EEhxxshghLEVQqwHplObQI9yzdxfVPD9ZOqbxQRi6hYm9uEU3DcAONhLDAIlaDltmZVr7Vfg3P+eucO+QJ7/aLuochWLxLX/NjBsihYLrZIY+y1JAP2jm+dkGVTimozr/zwopO4y4+FlLK71ZbE1xlLX/UZHdfN00rmmZwzeTN+S7+H3cQSCQO6p6qmk9fT94sr9S7pKa8/fSr/1q7wbvKcoOW0hYal4XHnuON58+kA7thgZgFEji6o9KqWsss1wqx/XLYu2ThU6OpplPzhL+AwaH1uQpmoQ5ge29Emadv42R1jw0js2nljA4sJFybFmV0LJwORvqjaYuEj2peS40BT3eI+51plD85p//gmTeT3W7zqR8KB5bWK1xzWReSOI0Vg6PGiBPSA38dH5V7OZXDjZRnlE1WTD3E7MVKGhQDwQHoQdAvNSG7LyBfK7eprCTQAR/LkTaIQrCxLsIkzoSor5ZkG6P+QWN+HaN9YFJT6p7TtHbzZqpRkKAcVkNwXcGOyIw4ofybmUUEQ8O5Y8CC9Fw== cardno:000610250089"
-        ];
-      };
+      # bemeurer = {
+      #   shell = pkgs.zsh;
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFAvxz7tBCov9310ucqrVeAS0aSWCVh5sSsLjH/62lIldFPd7JVK5y+f5VETycoRy9aQSzzlb4wsXtCX0WMtRx8tWbeV4MVXHSDROQEI1QpWM5BPgrLdNB5zR+czjSb0It+3XrzzOiu1RaIY/48EEhxxshghLEVQqwHplObQI9yzdxfVPD9ZOqbxQRi6hYm9uEU3DcAONhLDAIlaDltmZVr7Vfg3P+eucO+QJ7/aLuochWLxLX/NjBsihYLrZIY+y1JAP2jm+dkGVTimozr/zwopO4y4+FlLK71ZbE1xlLX/UZHdfN00rmmZwzeTN+S7+H3cQSCQO6p6qmk9fT94sr9S7pKa8/fSr/1q7wbvKcoOW0hYal4XHnuON58+kA7thgZgFEji6o9KqWsss1wqx/XLYu2ThU6OpplPzhL+AwaH1uQpmoQ5ge29Emadv42R1jw0js2nljA4sJFybFmV0LJwORvqjaYuEj2peS40BT3eI+51plD85p//gmTeT3W7zqR8KB5bWK1xzWReSOI0Vg6PGiBPSA38dH5V7OZXDjZRnlE1WTD3E7MVKGhQDwQHoQdAvNSG7LyBfK7eprCTQAR/LkTaIQrCxLsIkzoSor5ZkG6P+QWN+HaN9YFJT6p7TtHbzZqpRkKAcVkNwXcGOyIw4ofybmUUEQ8O5Y8CC9Fw== cardno:000610250089"
+      #   ];
+      # };
 
-      boredom101 = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjeemhlJimE+5/THTqeKyXuW2+2iDSZDdG0P2gz0x8SqQGJ5VeOYcxbOBzDdjXxgkScSVuCKbwSitpMsgLLlYhm3CfSP8rN0lhxz0t7Q7H6OWHzll07qLVvlh4BbBOwod8+NKHcPe+4Paur754IOlwCOb4kDRaUXBmyl84lgTik5g7m7XI7JJIQbZovguBZIVMjMNAPOonqL86OEk3WiuGOKrGFstLjl9P6LuA01Mz2E446PiajEMhzS5xPxs2s5Z/lT0+gLDdISQN69PaXy0kSZkXpjzoUADfgz4aZ/MgYTn6qR4ntlVHKxUpo8EbuTleFwsjMRHRA8bmCFReX4MMcj8/b0Vlzu7f9k1wADJAAT9GW+EVz7xgC4k9mMr0eWoYLYs0txuHwnG9DbA487p5R+P9LfUrXIYdqnk4YzvjbFIBJQIi3SQFdGlY1Z1989sQBBuuRkomZmnvKk1JPnrNtYQaXN4BzfJGydzpW8wEH/lBvoFckUviBodzGlCWnHk= yisroel@DESKTOP-MKI0HG0"
-        ];
-      };
+      # boredom101 = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjeemhlJimE+5/THTqeKyXuW2+2iDSZDdG0P2gz0x8SqQGJ5VeOYcxbOBzDdjXxgkScSVuCKbwSitpMsgLLlYhm3CfSP8rN0lhxz0t7Q7H6OWHzll07qLVvlh4BbBOwod8+NKHcPe+4Paur754IOlwCOb4kDRaUXBmyl84lgTik5g7m7XI7JJIQbZovguBZIVMjMNAPOonqL86OEk3WiuGOKrGFstLjl9P6LuA01Mz2E446PiajEMhzS5xPxs2s5Z/lT0+gLDdISQN69PaXy0kSZkXpjzoUADfgz4aZ/MgYTn6qR4ntlVHKxUpo8EbuTleFwsjMRHRA8bmCFReX4MMcj8/b0Vlzu7f9k1wADJAAT9GW+EVz7xgC4k9mMr0eWoYLYs0txuHwnG9DbA487p5R+P9LfUrXIYdqnk4YzvjbFIBJQIi3SQFdGlY1Z1989sQBBuuRkomZmnvKk1JPnrNtYQaXN4BzfJGydzpW8wEH/lBvoFckUviBodzGlCWnHk= yisroel@DESKTOP-MKI0HG0"
+      #   ];
+      # };
 
-      tomberek = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDSF4CzkvONzaze5m0huhLmED9fxQTtuyv7rszWI0ju/+U4Gq4+Sd800vFrADfnbiLS4hgK4pDw5D8dXxi74mPeXXZV4oomafCnlvW7tL7RidEXvkP2sr1ObgkuQ9K67hSqKjT21mCWdEN6WGHh9EtK5r3nXIzUWhATqDz/Al7sveDZ/gdapo+f3xnmpOu1mq+y5iOcRV7b98z/VaiWAvuG83toIBsK4Su/GWWfMNied9R2K2Z10NM3ART0Sk+4yqH4usJOieTQsLAq8Ykb3PAYDMVx41yy9QNcFnCyX/HJHFO/Q98BLQ2zPxVbBMwp99NrKLqrwkrVtrWbAttanm9 cardno:000607658414"
-        ];
-      };
+      # tomberek = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDSF4CzkvONzaze5m0huhLmED9fxQTtuyv7rszWI0ju/+U4Gq4+Sd800vFrADfnbiLS4hgK4pDw5D8dXxi74mPeXXZV4oomafCnlvW7tL7RidEXvkP2sr1ObgkuQ9K67hSqKjT21mCWdEN6WGHh9EtK5r3nXIzUWhATqDz/Al7sveDZ/gdapo+f3xnmpOu1mq+y5iOcRV7b98z/VaiWAvuG83toIBsK4Su/GWWfMNied9R2K2Z10NM3ART0Sk+4yqH4usJOieTQsLAq8Ykb3PAYDMVx41yy9QNcFnCyX/HJHFO/Q98BLQ2zPxVbBMwp99NrKLqrwkrVtrWbAttanm9 cardno:000607658414"
+      #   ];
+      # };
 
-      bill = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG2lfvWM5a7Xy255kRZN1c2Z5QToUm8ecF+/lP7FpS0 bill@ewanick.com"
-        ];
-      };
+      # bill = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG2lfvWM5a7Xy255kRZN1c2Z5QToUm8ecF+/lP7FpS0 bill@ewanick.com"
+      #   ];
+      # };
 
-      jtojnar = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEH4OFCc6a84dXHFHjNQ2HohLTFcYkxe+Lz/t3teWCrQ jtojnar@brian"
-        ];
-      };
+      # jtojnar = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEH4OFCc6a84dXHFHjNQ2HohLTFcYkxe+Lz/t3teWCrQ jtojnar@brian"
+      #   ];
+      # };
 
-      jurraca = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDGmwV0S9JoNaO3mMpSrjkv2gD4Vd0hw2ljLKaRzMQpv jurraca@nix"
-        ];
-      };
+      # jurraca = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDGmwV0S9JoNaO3mMpSrjkv2gD4Vd0hw2ljLKaRzMQpv jurraca@nix"
+      #   ];
+      # };
 
-      cleeyv = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4p4CqilI3n1GOyGcDgUh1UpwxeHSTIiV4oeHYjF431 cleeyv"
-        ];
-      };
+      # cleeyv = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4p4CqilI3n1GOyGcDgUh1UpwxeHSTIiV4oeHYjF431 cleeyv"
+      #   ];
+      # };
 
-      tshaynik = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3wOOYiW+G1u5zHpvzq0N+nhj5l9o8lMht4kYias28n tshaynik"
-        ];
-      };
+      # tshaynik = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3wOOYiW+G1u5zHpvzq0N+nhj5l9o8lMht4kYias28n tshaynik"
+      #   ];
+      # };
 
       artturin = {
         shell = pkgs.zsh;
@@ -408,65 +367,65 @@
         ];
       };
 
-      happysalada = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyQSeQ0CV/qhZPre37+Nd0E9eW+soGs+up6a/bwggoP raphael@RAPHAELs-MacBook-Pro.local"
-        ];
-      };
+      # happysalada = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyQSeQ0CV/qhZPre37+Nd0E9eW+soGs+up6a/bwggoP raphael@RAPHAELs-MacBook-Pro.local"
+      #   ];
+      # };
 
-      ysander = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6VLyCv4qmk2coyzhjm4qhd5LpsTmbNGh1HbJOWzYvj openpgp:0xF401BBD4"
-        ];
-      };
+      # ysander = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6VLyCv4qmk2coyzhjm4qhd5LpsTmbNGh1HbJOWzYvj openpgp:0xF401BBD4"
+      #   ];
+      # };
 
-      synthetica = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZaNsfqer68KD68f2udjv6BGg66aaIdTFMB50iaYK21 synthetica@AquaRing"
-        ];
-      };
+      # synthetica = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZaNsfqer68KD68f2udjv6BGg66aaIdTFMB50iaYK21 synthetica@AquaRing"
+      #   ];
+      # };
 
-      dermetfan = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBiYIJBUMPZqmFUcqaVp5h+6lsmvHIAZhCAjJ8a3El/2 dermetfan@laptop"
-        ];
-      };
+      # dermetfan = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBiYIJBUMPZqmFUcqaVp5h+6lsmvHIAZhCAjJ8a3El/2 dermetfan@laptop"
+      #   ];
+      # };
 
-      milahu = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuzJ8xfKAkt6m0ByZK26LZQaQQGsaX68D5/9UeiVGb9 user@laptop1"
-        ];
-      };
+      # milahu = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuzJ8xfKAkt6m0ByZK26LZQaQQGsaX68D5/9UeiVGb9 user@laptop1"
+      #   ];
+      # };
 
       # DavHau
-      davhau = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDuhpzDHBPvn8nv8RH1MRomDOaXyP4GziQm7r3MZ1Syk"
-        ];
-      };
+      # davhau = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDuhpzDHBPvn8nv8RH1MRomDOaXyP4GziQm7r3MZ1Syk"
+      #   ];
+      # };
 
       # @dasJ or das_j
-      janne = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM35Bq87SBWrEcoDqrZFOXyAmV/PJrSSu3hl3TdVvo4C janne"
-        ];
-      };
+      # janne = {
+      #   isNormalUser = true;
+      #   openssh.authorizedKeys.keys = [
+      #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM35Bq87SBWrEcoDqrZFOXyAmV/PJrSSu3hl3TdVvo4C janne"
+      #   ];
+      # };
 
-      sgo = {
-        isNormalUser = true;
-        shell = pkgs.fish;
-        openssh.authorizedKeys.keys = [
-          "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKDXQTWMtazTjVEnktJxpKPOmdGHZNHMqNNwnI+hjmY1AAAABHNzaDo= stig+yk-rk@stig.io"
-          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMXypzDKusK4bz7FSJkwlMUkXSXywf/xXvQSM7s5eJsEu68hD9i1wN4dHspqyZlqqNvlvtbS/DvnEP6z55g7CHY= stig+nixbuild@stig.io"
-        ];
-      };
+      # sgo = {
+      #   isNormalUser = true;
+      #   shell = pkgs.fish;
+      #   openssh.authorizedKeys.keys = [
+      #     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKDXQTWMtazTjVEnktJxpKPOmdGHZNHMqNNwnI+hjmY1AAAABHNzaDo= stig+yk-rk@stig.io"
+      #     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMXypzDKusK4bz7FSJkwlMUkXSXywf/xXvQSM7s5eJsEu68hD9i1wN4dHspqyZlqqNvlvtbS/DvnEP6z55g7CHY= stig+nixbuild@stig.io"
+      #   ];
+      # };
 
       glepage = {
         isNormalUser = true;

@@ -2,9 +2,9 @@
 
 {
   services.prometheus = {
-    enable = true;
+    enable = false;
     exporters.node = {
-      enable = true;
+      enable = false;
     };
   };
 }

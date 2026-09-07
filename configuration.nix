@@ -31,7 +31,7 @@
 
     tmp = {
       useTmpfs = true;
-      tmpfsSize = "60%";
+      tmpfsSize = "40%";
     };
 
     initrd.kernelModules = [ "zfs" ];

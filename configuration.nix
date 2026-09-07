@@ -233,15 +233,22 @@
 
   # Nix&Nixpkgs {{{
   nix = {
-    nrBuildUsers = 128;
+    nrBuildUsers = 64;
 
     settings = {
-      allowed-uris = ["git+https://" "https://" "github.com:jonringer/"];
+      allowed-uris = [
+        "git+https://"
+        "https://"
+        "github.com:jonringer/"
+        "github.com:ekala-project/"
+      ];
       auto-optimise-store = true;
-      sandbox = true;
-      cores = 32;
-      max-jobs = 40;
-      build-dir = "/tmp";
+      cores = 16;
+      max-jobs = 30;
+
+      # Automatic GC
+      min-free = "10G"; # Start at 10gb left
+      max-free = "100G"; # Stop at 100gb left
 
       substituters = [
         "https://cache.nixos.org"
@@ -268,11 +275,12 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+
     gc = {
       automatic = true;
       # every 3rd day
       dates = "*-*-1,4,7,10,13,16,19,22,25,28,31 00:00:00";
-      options = "--delete-older-than 2d";
+      options = "--delete-older-than 8d";
     };
 
     nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];

@@ -458,7 +458,7 @@
   time.timeZone = "America/Los_Angeles";
 
   # Snix binary cache at cache.jonringer.us (nar-bridge + post-build-hook).
-  services.snix.enable = true;
+  services.snix.enable = false;
 
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
   systemd.services.factorio.serviceConfig = {

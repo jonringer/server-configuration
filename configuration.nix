@@ -13,6 +13,7 @@
     ./prometheus-metrics.nix
     ./web.nix
     ./snix.nix
+    ./jigd.nix
   ];
   # }}}
 
@@ -459,6 +460,9 @@
 
   # Snix binary cache at cache.jonringer.us (nar-bridge + post-build-hook).
   services.snix.enable = false;
+
+  # jigd compilation cache — caches C/C++/Rust/Go object files across builds.
+  services.jigd.enable = true;
 
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
   systemd.services.factorio.serviceConfig = {

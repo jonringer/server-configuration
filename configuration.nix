@@ -194,23 +194,39 @@
 
   # Nix&Nixpkgs {{{
   nix = {
-    nrBuildUsers = 64;
-
+    package = inputs.repkgs.packages.${pkgs.system}.nix;
     settings = {
+      cores = 16;
+      max-jobs = 30;
+      use-cgroups = true;
+      auto-allocate-uids = true;
+      auto-optimise-store = true;
+
+      # Automatic GC
+      min-free = "10G"; # Start at 10gb left
+      max-free = "100G"; # Stop at 100gb left
+
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "ca-derivations"
+        "dynamic-derivations"
+        "cgroups"
+        "auto-allocate-uids"
+        "recursive-nix"
+      ];
+      extra-system-features = [
+        "uid-range"
+        "builder-rpc-v0"
+        "recursive-nix"
+      ];
+
       allowed-uris = [
         "git+https://"
         "https://"
         "github.com:jonringer/"
         "github.com:ekala-project/"
       ];
-      auto-optimise-store = true;
-      cores = 16;
-      max-jobs = 30;
-
-      # Automatic GC
-      min-free = "10G"; # Start at 10gb left
-      max-free = "100G"; # Stop at 100gb left
-
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
@@ -231,11 +247,6 @@
         "qweered"
       ];
     };
-
-    # Flake support
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
 
     gc = {
       automatic = true;

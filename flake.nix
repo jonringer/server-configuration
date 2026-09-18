@@ -12,6 +12,12 @@
     flake = false;
   };
 
+  # For nix with content-addressed fixes
+  inputs.repkgs = {
+    url = "github:Mic92/repkgs";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   # Async post-build-hook: queues builds instead of blocking nix-daemon.
   inputs.queued-build-hook = {
     url = "github:nix-community/queued-build-hook";

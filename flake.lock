@@ -159,11 +159,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1788405554,
-        "narHash": "sha256-r2f1oUwixlgq9zOdYLqJLfS/lWBT60/IITjhTKI59JU=",
+        "lastModified": 1789684949,
+        "narHash": "sha256-ZKhUe/2IJUq1JhKxKMu8rbkgSGmPP2ZCqlIPn40aGCM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a5cc6f2c37bf518436dc8d1c288ccd0c43c2f4c4",
+        "rev": "e554fab72f81915600f3f449b786fd9af40439a5",
         "type": "github"
       },
       "original": {
@@ -232,11 +232,32 @@
         "type": "github"
       }
     },
+    "repkgs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789645634,
+        "narHash": "sha256-5z89dojk5DPlZwZj8MIenDfKTv2jx/KY2ri0PkaiyBk=",
+        "owner": "Mic92",
+        "repo": "repkgs",
+        "rev": "35a23148e5235594203aebe1b9f9316fdaca6246",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "repkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "hydra": "hydra",
         "nixpkgs": "nixpkgs_2",
         "queued-build-hook": "queued-build-hook",
+        "repkgs": "repkgs",
         "snix": "snix"
       }
     },

@@ -3,9 +3,9 @@
   pkgs,
   lib,
   inputs,
-  system,
   ...
-}: {
+}:
+{
   # Imports {{{
   imports = [
     # Include the results of the hardware scan.
@@ -71,11 +71,11 @@
       freeMemThreshold = 2;
     };
 
-    journald.extraConfig = ''
-      MaxRetentionSec=3week
-      SystemMaxUse=200M
-      RuntimeMaxUse=100M
-    '';
+    journald.settings.Journal = {
+      MaxRetentionSec = "3week";
+      SystemMaxUse = "200M";
+      RuntimeMaxUse = "100M";
+    };
 
     ollama = {
       enable = true;
@@ -96,7 +96,7 @@
       extraConfig = ''
         StreamLocalBindUnlink yes
       '';
-      authorizedKeysFiles = ["/etc/ssh/extra_authorized_keys"];
+      authorizedKeysFiles = [ "/etc/ssh/extra_authorized_keys" ];
       settings.PasswordAuthentication = false;
     };
 
@@ -255,7 +255,7 @@
       options = "--delete-older-than 8d";
     };
 
-    nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
+    nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
   };
 
   nixpkgs = {
@@ -307,7 +307,7 @@
 
       tim = {
         isNormalUser = true;
-        extraGroups = ["libvirtd"];
+        extraGroups = [ "libvirtd" ];
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIf7jDfqGKNZVwrJ3Yl+4aJe8sZpCmhlOB5PJC9L1Kto tim.deherrera@iohk.io"
         ];
@@ -494,4 +494,3 @@
   # }}}
 }
 # vim: fdm=marker
-

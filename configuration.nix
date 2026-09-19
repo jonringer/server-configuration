@@ -12,7 +12,6 @@
     ./hardware-configuration.nix
     ./prometheus-metrics.nix
     ./web.nix
-    ./snix.nix
     ./jigd.nix
   ];
   # }}}
@@ -468,9 +467,6 @@
   hardware.cpu.amd.updateMicrocode = true;
   virtualisation.libvirtd.enable = true;
   time.timeZone = "America/Los_Angeles";
-
-  # Snix binary cache at cache.jonringer.us (nar-bridge + post-build-hook).
-  services.snix.enable = false;
 
   # jigd compilation cache — caches C/C++/Rust/Go object files across builds.
   services.jigd.enable = true;

@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
@@ -55,6 +54,14 @@
         http_port = 3050;
       };
       "auth.anonymous".enabled = true;
+    };
+
+    cachix-watch-store = {
+      enable = true;
+      cacheName = "ekala-corepkgs";
+      jobs = 4;
+      cachixTokenFile = "/var/cachix-token";
+      signingKeyFile = "/var/cache-priv-key.pem";
     };
 
     nix-serve = {

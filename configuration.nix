@@ -57,14 +57,6 @@
       "auth.anonymous".enabled = true;
     };
 
-    cachix-watch-store = {
-      enable = true;
-      cacheName = "ekala-corepkgs";
-      jobs = 4;
-      cachixTokenFile = "/var/cachix-token";
-      signingKeyFile = "/var/cache-priv-key.pem";
-    };
-
     zfs.trim.enable = true;
 
     earlyoom = {

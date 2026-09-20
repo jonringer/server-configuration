@@ -3,8 +3,6 @@
     corepkgs-v2.url = "github:ekala-project/corepkgs-v2";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     #nixpkgs.url = "path:/home/jon/projects/nixpkgs";
-    hydra.url = "github:NixOS/hydra";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: {

@@ -1,15 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    corepkgs-v2.url = "github:ekala-project/corepkgs-v2";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     #nixpkgs.url = "path:/home/jon/projects/nixpkgs";
     hydra.url = "github:NixOS/hydra";
-    #inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
-
-    # For nix with content-addressed fixes
-    repkgs = {
-      url = "github:Mic92/repkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: {

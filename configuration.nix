@@ -306,10 +306,8 @@
         shell = pkgs.fish;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPHJLW23Vnv5K/tka6F0Cdc8Ghk/BdF2E8n7lL+vvqBf qweered"
-          # Remote-builder key. `restrict` drops port/agent/X11 forwarding and
-          # the PTY; the forced command means it can only speak the Nix daemon
-          # protocol on stdin, never open a shell.
-          ''restrict,command="nix-daemon --stdio" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBPdiUh6RKQM4t2ZF0VpWMMDil0Y34ccjJ9y62X8P5bP nix-builder@hyprnix''
+          # For remote builder and jigd socket
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBPdiUh6RKQM4t2ZF0VpWMMDil0Y34ccjJ9y62X8P5bP nix-builder@hyprnix"
         ];
       };
 

@@ -10,15 +10,18 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
 let
   cfg = config.services.jigd;
 
-  defaultJigPackage = pkgs.callPackage ./jig-package.nix {};
-  defaultJigdPackage = pkgs.callPackage ./jigd-package.nix {};
-in {
+  # jig and jigd ship in the set; bumping is just `nix flake update corepkgs-v2`.
+  defaultJigPackage = inputs.corepkgs-v2.packages.${pkgs.stdenv.hostPlatform.system}.jig;
+  defaultJigdPackage = inputs.corepkgs-v2.packages.${pkgs.stdenv.hostPlatform.system}.jigd;
+in
+{
   options.services.jigd = {
     enable = lib.mkEnableOption "jigd compilation cache daemon";
 
@@ -76,7 +79,8 @@ in {
       environment = {
         JIGD_SIZE = toString cfg.cacheSize;
         XDG_CACHE_HOME = "/var/cache/jigd";
-      } // lib.optionalAttrs (cfg.slots != null) {
+      }
+      // lib.optionalAttrs (cfg.slots != null) {
         JIGD_SLOTS = toString cfg.slots;
       };
 
@@ -99,9 +103,14 @@ in {
       };
     };
 
-    # Map socket into Nix sandbox so builds can use the cache
+    # Map socket into Nix sandbox so builds can use the cache.
+    # Both paths: the service path, and jig's default lookup
+    # (<store>/../var/nix/jigd/socket), which is what sandboxed clients use
+    # since sandbox env does not carry JIG_SOCK. This covers local builds and
+    # remote builds executed here via the nix daemon alike.
     nix.settings.extra-sandbox-paths = lib.mkIf cfg.openSandbox [
       cfg.socketPath
+      "/nix/var/nix/jigd/socket=${cfg.socketPath}"
     ];
   };
 }

@@ -200,7 +200,7 @@
 
   # Nix&Nixpkgs {{{
   nix = {
-    package = inputs.repkgs.packages.${pkgs.hostPlatform.system}.nix;
+    package = inputs.corepkgs-v2.packages.${pkgs.stdenv.hostPlatform.system}.nix;
     settings = {
       cores = 16;
       max-jobs = 30;

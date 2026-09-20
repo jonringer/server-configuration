@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "corepkgs-v2": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1789909891,
+        "narHash": "sha256-776pMpJYcZp+HPhv0q/I8bGd2xhq+oL+GWQwzKDA4ts=",
+        "owner": "ekala-project",
+        "repo": "corepkgs-v2",
+        "rev": "dac71c8993416e3ec965f565cd28c6f8234544f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ekala-project",
+        "repo": "corepkgs-v2",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1787326676,
@@ -38,15 +56,17 @@
         "foreman": "foreman",
         "nix": "nix",
         "nix-eval-jobs": "nix-eval-jobs",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1788564028,
-        "narHash": "sha256-U40EKwqsJyAeNW02J78KH+Uco8VrT+pM3mcdqkjtM8w=",
+        "lastModified": 1788995018,
+        "narHash": "sha256-wbPw1mlCrZODGxWFSXkOjCtKRWYeZYcs/W24yay3tKM=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "9388ff6d526fe865efaae9dbf8506a5b7fba91ed",
+        "rev": "1d1d8b1c6fdc08444a514f383b291228f19d72d8",
         "type": "github"
       },
       "original": {
@@ -91,58 +111,38 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1787753485,
-        "narHash": "sha256-mGPB6ofYpLaHyCO7tI0L1hCb69lsY0t7dqIsYIhXP7Y=",
-        "rev": "062346a6d85bc4b49dfaa61c986e9c5be21217d1",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.8477.062346a6d85b/nixexprs.tar.xz"
+        "lastModified": 1789264731,
+        "narHash": "sha256-llGJbC0CcU8DfROr6mZjRJgMLQd/SKwfpzxJH/2lHO4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "02f5696b0e6097e589076d886b317b83ff0437d7",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-26.05/nixexprs.tar.xz"
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1789684949,
-        "narHash": "sha256-ZKhUe/2IJUq1JhKxKMu8rbkgSGmPP2ZCqlIPn40aGCM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e554fab72f81915600f3f449b786fd9af40439a5",
-        "type": "github"
+        "lastModified": 1789785513,
+        "narHash": "sha256-BMbikTjbh5H7ac/OjwGoJrlooh4dgNqhs51ABM83M7g=",
+        "rev": "20b1ddd1aa5ace70c9468305030aa4f9ef79671b",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1076192.20b1ddd1aa5a/nixexprs.tar.xz"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-26.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "repkgs": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1789645634,
-        "narHash": "sha256-5z89dojk5DPlZwZj8MIenDfKTv2jx/KY2ri0PkaiyBk=",
-        "owner": "Mic92",
-        "repo": "repkgs",
-        "rev": "35a23148e5235594203aebe1b9f9316fdaca6246",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "repkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
       }
     },
     "root": {
       "inputs": {
+        "corepkgs-v2": "corepkgs-v2",
         "hydra": "hydra",
-        "nixpkgs": "nixpkgs_2",
-        "repkgs": "repkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "treefmt-nix": {

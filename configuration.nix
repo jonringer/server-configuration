@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./prometheus-metrics.nix
     ./web.nix
+    ./post-build-hook.nix
     ./jigd.nix
   ];
   # }}}

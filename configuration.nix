@@ -64,11 +64,6 @@
       signingKeyFile = "/var/cache-priv-key.pem";
     };
 
-    nix-serve = {
-      enable = false;
-      secretKeyFile = "/var/cache-priv-key.pem";
-    };
-
     zfs.trim.enable = true;
 
     earlyoom = {

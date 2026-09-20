@@ -43,7 +43,7 @@ hydra instance. Care should be taken to avoid using binary packages from any 3rd
 
 
 ```nix
-binaryCaches = [ "https://cache.jonringer.us" ];
-binaryCachePublicKeys = [ "cache.jonringer.us:c06xmyNNX/uG4j7db3flzcz08Yi3rBkpdaLuZKrZvwIEZqv5fn8vpPY1CKR4OrX977Aw9g/4axmzHr/QdqD4BA==" ];
+binaryCaches = [ "https://ekala-corepkgs.cachix.org" ];
+binaryCachePublicKeys = [ "ekala-corepkgs.cachix.org-1:DcZV+vegWoEzacbSdXFXU4S7728C0eS9RfGpKeyHd6w=" ];
 ```
 

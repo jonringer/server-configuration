@@ -16,6 +16,9 @@
   ];
   # }}}
 
+  # ekapkgs overlay — provides pkgs.ekapkgs and pkgs.ekapkgs-serve
+  nixpkgs.overlays = [ inputs.ekapkgs-cli.overlays.default ];
+
   # Boot {{{
   boot = {
     # Use the systemd-boot EFI boot loader.
@@ -29,10 +32,6 @@
 
     loader.efi.canTouchEfiVariables = true;
 
-    tmp = {
-      useTmpfs = true;
-      tmpfsSize = "40%";
-    };
 
     initrd.kernelModules = [ "zfs" ];
     initrd.supportedFilesystems.zfs = true;
@@ -129,6 +128,31 @@
     xserver.displayManager.lightdm.enable = true;
 
     gnome.at-spi2-core.enable = true;
+
+    # ekapkgs CAS binary cache server
+    ekapkgs-serve = {
+      enable = true;
+      signingKeyFile = "/var/cache-priv-key.pem";
+      environmentFile = "/var/lib/ekapkgs-serve/env";
+      openFirewall = true;
+      settings = {
+        signing.secret_key_file = "/var/cache-priv-key.pem";
+        server = {
+          bind = "0.0.0.0:8080";
+          priority = 10;
+          enable_metrics = true;
+        };
+        storage = {
+          backend = "castore";
+          path = "/tank/nixstore/ekapkgs-serve";
+          gc = {
+            max_size = "2TiB";
+            target_size = "1800GiB";
+            gc_interval_secs = 300;
+          };
+        };
+      };
+    };
   };
   # }}}
 
@@ -222,6 +246,7 @@
         "github.com:ekala-project/"
       ];
       substituters = [
+        "http://localhost:8080"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         "https://ekala-corepkgs.cachix.org"
@@ -466,12 +491,20 @@
   # jigd compilation cache — caches C/C++/Rust/Go object files across builds.
   services.jigd.enable = true;
 
+  systemd.services.ekapkgs-server.serviceConfig = {
+    ReadOnlyPaths = "/var/cache-priv-key.pem:/var/cache-privkey";
+  };
   systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce 1048576;
   systemd.services.factorio.serviceConfig = {
     CPUSchedulingPolicy = "rr";
     CPUSchedulingPriority = 99;
     IOSchedulingClass = "realtime";
     Nice = -20;
+  };
+
+  fileSystems."/tmp" = {
+    device = "tank/tmpfs";
+    fsType = "zfs";
   };
 
   security.pam.loginLimits = [

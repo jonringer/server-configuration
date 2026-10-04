@@ -13,6 +13,10 @@
         pre-commit-hooks.follows = "";
       };
     };
+    ekapkgs-cli = {
+      url = "github:ekala-project/ekapkgs-cli?ref=jonringer/storage-signing";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: {
@@ -20,6 +24,7 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
+        inputs.ekapkgs-cli.nixosModules.ekapkgs-serve
       ];
       specialArgs = {
         inherit inputs;

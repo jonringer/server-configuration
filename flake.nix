@@ -14,17 +14,26 @@
       };
     };
     ekapkgs-cli = {
-      url = "github:ekala-project/ekapkgs-cli?ref=jonringer/storage-signing";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:ekala-project/ekapkgs-cli";
+      flake = false;
+    };
+    eka-ci = {
+      url = "github:ekala-project/eka-ci";
+      flake = false;
     };
   };
 
-  outputs = inputs: {
+  outputs = inputs: let
+      ekapkgs-cli = inputs.ekapkgs-cli + "/nix/module.nix";
+      eka-ci = inputs.eka-ci + "/nix/module.nix";
+  in {
     nixosConfigurations.server = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        inputs.ekapkgs-cli.nixosModules.ekapkgs-serve
+        ekapkgs-cli
+        eka-ci
+        ./eka-ci.nix
       ];
       specialArgs = {
         inherit inputs;

@@ -17,7 +17,9 @@
   # }}}
 
   # ekapkgs overlay — provides pkgs.ekapkgs and pkgs.ekapkgs-serve
-  nixpkgs.overlays = [ inputs.ekapkgs-cli.overlays.default ];
+  nixpkgs.overlays = let
+    ekapkgs-cli = import (inputs.ekapkgs-cli + "/nix/overlay.nix");
+  in [ ekapkgs-cli ];
 
   # Boot {{{
   boot = {

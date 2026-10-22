@@ -34,7 +34,6 @@
 
     loader.efi.canTouchEfiVariables = true;
 
-
     initrd.kernelModules = [ "zfs" ];
     initrd.supportedFilesystems.zfs = true;
     supportedFilesystems = [ "zfs" ];
@@ -248,7 +247,6 @@
         "github.com:ekala-project/"
       ];
       substituters = [
-        "http://localhost:8080"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         "https://ekala-corepkgs.cachix.org"

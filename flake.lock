@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1789909891,
-        "narHash": "sha256-776pMpJYcZp+HPhv0q/I8bGd2xhq+oL+GWQwzKDA4ts=",
+        "lastModified": 1792110874,
+        "narHash": "sha256-GwZh6jFkN726MfZ7djYdp/OfoFenFC38QIserCUyhtk=",
         "owner": "ekala-project",
         "repo": "corepkgs-v2",
-        "rev": "dac71c8993416e3ec965f565cd28c6f8234544f7",
+        "rev": "39ce118ea3f296f4fb36390bf09521b7bc8423d1",
         "type": "github"
       },
       "original": {
